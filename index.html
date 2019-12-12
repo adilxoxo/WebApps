@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Table Filter Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
+  <style>
+	.search{
+		margin-top:10px;
+	}
+  </style>
+</head>
+<body>
+<script >
+var macthed = false;
+	$(document).ready(function(){
+		$("input").keyup(function(){
+			var searchKey = $(this).val();
+			macthed = false;
+			if( searchKey.trim("") === ""){
+				$("tbody tr").each(function() {
+					$(this).show();
+				});
+				return;
+			}
+			filterTableAPI(searchKey);
+		});
+		
+		for(var i = 0; i < 100; i++){
+			$('#myTable tbody').append('<tr><td>Adil'+i+'</td><td>Sheikh'+i+'</td><td>adil.sheikh'+i+'@gmail.com</td></tr>');
+		}
+	});
+	
+	function filterTableAPI(searchKey){
+	$("tbody tr").each(function() {
+		$(this).hide();
+	});
+	var keyChars = searchKey;
+		$("tbody tr").each(function() {
+			macthed = false;
+			$(this).find("td").each(function() {
+				var chars = $(this).text();
+				if(chars.toLowerCase().indexOf(keyChars.toLowerCase()) !== -1)
+					macthed = true;
+			});
+			if(macthed == true){
+				$(this).show();
+			}
+		});
+	}
+</script>
+<div class="container">
+  <input class="form-control search" placeholder="Search..." />
+  <table class="table" id="myTable">
+    <thead>
+      <tr>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+		
+	</tbody>
+	</table>
+</div>
+
+</body>
+</html>
+
